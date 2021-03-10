@@ -71,7 +71,7 @@
 <t tx="leo.20170709015940.1"></t>
 <t tx="leo.20170709015947.1"></t>
 <t tx="leo.20170709020600.1"></t>
-<t tx="leo.20170709224430.1">@language python
+<t tx="leo.20170709224430.1"> @language python
 import os
 
 os.system("pelican markdown -o blog -s publishconf.py")
@@ -91,18 +91,17 @@ g.es("admin pelican Github 執行完畢")
 <t tx="leo.20180115115910.1"></t>
 <t tx="leo.20210227152459.1">@language md
 ---
-Title:2021
-Date:2021-02-27
-Category:Misc
-Tage:2021cad
-Slug:2021-cad
-Author:Lu
-
+Title: 2021 Pelican 設定修改
+Date: 2021-02-27 15:00
+Category:blog
+Tags: 202102
+Slug: 2021
+Author: Lu
 ---
 
-2021cad
 
 &lt;!-- PELICAN_END_SUMMARY --&gt;
+
 
 @others</t>
 <t tx="leo.20210227152514.1">Python
