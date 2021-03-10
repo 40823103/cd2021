@@ -91,13 +91,14 @@ g.es("admin pelican Github 執行完畢")
 <t tx="leo.20180115115910.1"></t>
 <t tx="leo.20210227152459.1">@language md
 ---
-Title: 2021 Pelican 設定修改
+Title: cd2021
 Date: 2021-02-27 15:00
 Category:blog
 Tags: 202102
 Slug: 2021
 Author: Lu
 ---
+2020 Fall 計算機程式的教學主要介紹 Python 與 Flutter 在機械設計流程中的應用.
 
 
 &lt;!-- PELICAN_END_SUMMARY --&gt;
