@@ -104,27 +104,6 @@
 <p><span>網頁 gitlab</span></p>
 <p><span><a href="https://40823103.gitlab.io/stage3-ag3/content/Task1.html">https://40823103.gitlab.io/stage3-ag3/content/Task1.html</a></span></p>
 <h3>TASK1</h3>
-<pre class="brush:dart;auto-links:false;toolbar:false" contenteditable="false"># open file, default is read mode, since txt content no chinese char4
-# no encoding = "UTF-08" is needed
-with open("stage3_2a.txt") as fh:
-    # readlines will read into the whole line and put into list format 23
-    # has \n at the end of each line 13
-    data = fh.readlines()
-    data = [a.replace('4823122','40823122') for a in data]
-    data = [c.replace('\t\t\t\t','') for c in data]
-    print(data)
-#print(len(data))1
-for i in range(len(data)):
-    group = data[i].rstrip("\n").split("\t")
-    print('&lt;p&gt;'+group[0]+'|&lt;a href="https://'+group[1]+'.github.io/stage3-ag'+group[0][9]+'"&gt;網站&lt;/a&gt;|&lt;a href="https://github.com/'+group[2]+'/stage3-ag'+group[0][9]+'"&gt;倉儲&lt;/a&gt;&lt;/p&gt;')
-# the following will use group data to generate needed html
-   
-    for j in range(2,18,2):
-        try:
-            print('&lt;p&gt;'+group[j]+'|網址:'+'&lt;a href="https://'+group[j]+'.github.io/cd2021'+'"&gt;'+group[j]+'&lt;/a&gt;'+'|倉儲:'+'&lt;a href="https://github.com/'+group[j]+'/cd2021'+'"&gt;'+group[j]+'&lt;/a&gt;&lt;/p&gt;')
-        except:
-            continue</pre>
-<p><br/><br/></p>
 <p>stage3_ag1|<a href="https://40823131.github.io/stage3-ag1">網站</a>|<a href="https://github.com/40823131/stage3-ag1">倉儲</a></p>
 <p>40823131|網址:<a href="https://40823131.github.io/cd2021">40823131</a>|倉儲:<a href="https://github.com/40823131/cd2021">40823131</a></p>
 <p>a40823112|網址:<a href="https://a40823112.github.io/cd2021">a40823112</a>|倉儲:<a href="https://github.com/a40823112/cd2021">a40823112</a></p>
@@ -177,7 +156,30 @@ for i in range(len(data)):
 <p>40823129|網址:<a href="https://40823129.github.io/cd2021">40823129</a>|倉儲:<a href="https://github.com/40823129/cd2021">40823129</a></p>
 <p>40823149|網址:<a href="https://40823149.github.io/cd2021">40823149</a>|倉儲:<a href="https://github.com/40823149/cd2021">40823149</a></p>
 <p>40823153|網址:<a href="https://40823153.github.io/cd2021">40823153</a>|倉儲:<a href="https://github.com/40823153/cd2021">40823153</a></p>
+<p></p>
+<p>參考40823122修改</p>
 <p><span>讀取 </span><a href="http://mde.tw/cd2021/downloads/stage3/stage3_2a.txt">stage3_2a.txt</a></p>
+<pre class="brush:dart;auto-links:false;toolbar:false" contenteditable="false"># open file, default is read mode, since txt content no chinese char4
+# no encoding = "UTF-08" is needed
+with open("stage3_2a.txt") as fh:
+    # readlines will read into the whole line and put into list format 23
+    # has \n at the end of each line 13
+    data = fh.readlines()
+    data = [a.replace('4823122','40823122') for a in data]
+    data = [c.replace('\t\t\t\t','') for c in data]
+    print(data)
+#print(len(data))1
+for i in range(len(data)):
+    group = data[i].rstrip("\n").split("\t")
+    print('&lt;p&gt;'+group[0]+'|&lt;a href="https://'+group[1]+'.github.io/stage3-ag'+group[0][9]+'"&gt;網站&lt;/a&gt;|&lt;a href="https://github.com/'+group[2]+'/stage3-ag'+group[0][9]+'"&gt;倉儲&lt;/a&gt;&lt;/p&gt;')
+# the following will use group data to generate needed html
+   
+    for j in range(2,18,2):
+        try:
+            print('&lt;p&gt;'+group[j]+'|網址:'+'&lt;a href="https://'+group[j]+'.github.io/cd2021'+'"&gt;'+group[j]+'&lt;/a&gt;'+'|倉儲:'+'&lt;a href="https://github.com/'+group[j]+'/cd2021'+'"&gt;'+group[j]+'&lt;/a&gt;&lt;/p&gt;')
+        except:
+            continue</pre>
+<p><br/><br/></p>
 <p></p>
 <p><strong><span style="color: #000000;">以下為每組亂數抽選 2 名組員的程式碼:</span></strong></p>
 <pre class="brush:html;auto-links:false;toolbar:false" contenteditable="false"># open file, default is read mode, since txt content no chinese char
