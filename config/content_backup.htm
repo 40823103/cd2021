@@ -97,12 +97,10 @@
 <p>5.張宸嘉 40823154</p>
 <p>6.王彥筑 40523252</p>
 <h3>w10</h3>
-<p><span>建立分組倉儲,分組網頁</span></p>
-<p><span>倉儲</span></p>
-<p><span><a href="https://github.com/40823103/stage3-ag3">https://github.com/40823103/stage3-ag3</a></span></p>
-<p><span>網頁 gitlab</span></p>
-<p><span><a href="https://40823103.gitlab.io/stage3-ag3/content/Task1.html">https://40823103.gitlab.io/stage3-ag3/content/Task1.html</a></span></p>
-<h4 class="Counter discussion-vote-count d-flex flex-row">TASK1</h4>
+<p><strong>建立分組倉儲,分組網頁</strong></p>
+<p><span>倉儲:</span><span><a href="https://github.com/40823103/stage3-ag3">https://github.com/40823103/stage3-ag3</a></span></p>
+<p><span>網頁:</span><span><a href="https://40823103.gitlab.io/stage3-ag3/content/Task1.html">https://40823103.github.io/stage3-ag3/content</a></span></p>
+<p>TASK1</p>
 <p>stage3_ag1|<a href="https://40823131.github.io/stage3-ag1">網站</a>|<a href="https://github.com/40823131/stage3-ag1">倉儲</a></p>
 <p>40823131|網址:<a href="https://40823131.github.io/cd2021">40823131</a>|倉儲:<a href="https://github.com/40823131/cd2021">40823131</a></p>
 <p>a40823112|網址:<a href="https://a40823112.github.io/cd2021">a40823112</a>|倉儲:<a href="https://github.com/a40823112/cd2021">a40823112</a></p>
@@ -233,12 +231,11 @@ for i in range(len(data)):
     # seperator
     print("-"*20)
 # the following will use group data to generate needed html</pre>
-<h4>TASK2</h4>
+<p>TASK2</p>
 <h4 class="title style-scope ytd-video-primary-info-renderer"><yt-formatted-string class="style-scope ytd-video-primary-info-renderer" force-default-style="">CoppeliaSim 場景 remote API 協同監控流程</yt-formatted-string></h4>
 <p></p>
 <h4 class="title style-scope ytd-video-primary-info-renderer"><yt-formatted-string class="style-scope ytd-video-primary-info-renderer" force-default-style=""><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/ndEd9lHBDvc" width="560"></iframe></yt-formatted-string></h4>
-<p></p>
-<h3>w11</h3>
+<p></p><h3>w11</h3>
 <p></p>
 <p>參考的主題</p>
 <p><a href="https://weheartit.com/entry/301240914">https://weheartit.com/entry/301240914</a></p>
@@ -286,6 +283,108 @@ for i in range(len(data)):
 <p><img alt="" height="268" src="/images/3.png" width="500"/></p>
 <p></p>
 <p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/T_1j5dkVDQg" width="560"></iframe></p>
+<p></p>
+<pre class="brush:dart;auto-links:false;toolbar:false" contenteditable="false">function sysCall_init() 
+    objectHandle=sim.getObjectHandle('suctionPad')
+    sim.setUserParameter(objectHandle,'@enable','')
+    modelBase=sim.getObjectAssociatedWithScript(sim.handle_self)
+    robotBase=modelBase
+    while true do
+        robotBase=sim.getObjectParent(robotBase)
+        if robotBase==-1 then
+            robotName='Dobot'
+            break
+        end
+        robotName=sim.getObjectName(robotBase)
+        suffix,suffixlessName=sim.getNameSuffix(robotName)
+        if suffixlessName=='Dobot' then
+            break
+        end
+    end
+ 
+    s=sim.getObjectHandle('suctionPadSensor')
+    l=sim.getObjectHandle('suctionPadLoopClosureDummy1')
+    l2=sim.getObjectHandle('suctionPadLoopClosureDummy2')
+    b=sim.getObjectHandle('suctionPad')
+    suctionPadLink=sim.getObjectHandle('suctionPadLink')
+    local gripperBase=sim.getObjectAssociatedWithScript(sim.handle_self)
+ 
+    infiniteStrength=sim.getScriptSimulationParameter(sim.handle_self,'infiniteStrength')
+    maxPullForce=sim.getScriptSimulationParameter(sim.handle_self,'maxPullForce')
+    maxShearForce=sim.getScriptSimulationParameter(sim.handle_self,'maxShearForce')
+    maxPeelTorque=sim.getScriptSimulationParameter(sim.handle_self,'maxPeelTorque')
+ 
+    sim.setLinkDummy(l,-1)
+    sim.setObjectParent(l,b,true)
+    m=sim.getObjectMatrix(l2,-1)
+    sim.setObjectMatrix(l,-1,m)
+end
+ 
+function sysCall_cleanup() 
+    sim.setLinkDummy(l,-1)
+    sim.setObjectParent(l,b,true)
+    m=sim.getObjectMatrix(l2,-1)
+    sim.setObjectMatrix(l,-1,m)
+end 
+ 
+function sysCall_sensing() 
+    parent=sim.getObjectParent(l)
+    local sig=sim.getIntegerSignal("pad_switch")
+    if (not sig) or (sig==0) then
+        if (parent~=b) then
+            sim.setLinkDummy(l,-1)
+            sim.setObjectParent(l,b,true)
+            m=sim.getObjectMatrix(l2,-1)
+            sim.setObjectMatrix(l,-1,m)
+        end
+    else
+        if (parent==b) then
+            index=0
+            while true do
+                shape=sim.getObjects(index,sim.object_shape_type)
+                if (shape==-1) then
+                    break
+                end
+                local res,val=sim.getObjectInt32Parameter(shape,sim.shapeintparam_respondable)
+                if (shape~=b) and (val~=0) and (sim.checkProximitySensor(s,shape)==1) then
+                    -- Ok, we found a respondable shape that was detected
+                    -- We connect to that shape:
+                    -- Make sure the two dummies are initially coincident:
+                    sim.setObjectParent(l,b,true)
+                    m=sim.getObjectMatrix(l2,-1)
+                    sim.setObjectMatrix(l,-1,m)
+                    -- Do the connection:
+                    sim.setObjectParent(l,shape,true)
+                    sim.setLinkDummy(l,l2)
+                    break
+                end
+                index=index+1
+            end
+        else
+            -- Here we have an object attached
+            if (infiniteStrength==false) then
+                -- We might have to conditionally beak it apart!
+                result,force,torque=sim.readForceSensor(suctionPadLink) -- Here we read the median value out of 5 values (check the force sensor prop. dialog)
+                if (result&gt;0) then
+                    breakIt=false
+                    if (force[3]&gt;maxPullForce) then breakIt=true end
+                    sf=math.sqrt(force[1]*force[1]+force[2]*force[2])
+                    if (sf&gt;maxShearForce) then breakIt=true end
+                    if (torque[1]&gt;maxPeelTorque) then breakIt=true end
+                    if (torque[2]&gt;maxPeelTorque) then breakIt=true end
+                    if (breakIt) then
+                        -- We break the link:
+                        sim.setLinkDummy(l,-1)
+                        sim.setObjectParent(l,b,true)
+                        m=sim.getObjectMatrix(l2,-1)
+                        sim.setObjectMatrix(l,-1,m)
+                    end
+                end
+            end
+        end
+    end
+end</pre>
+<p></p>
 <h2>逆向運動學函式</h2>
 <h4><span>以程式指定方塊取放之兩個位置 - (0.2, 0.7, 0.05) 與 (-0.3, -0.55, 0.05)</span></h4>
 <p><img alt="" height="267" src="/images/4.png" width="500"/></p>
@@ -347,7 +446,8 @@ function sysCall_threadmain()
     sim.wait(4)
     end
 end</pre>
-<p></p><h2>Python remote API 逆向運動學函式</h2>
+<p></p>
+<h2>Python remote API 逆向運動學函式</h2>
 <p><span>利用 Python remote API 程式</span></p>
 <p><img alt="" height="268" src="/images/5.png" width="500"/></p>
 <p><iframe allowfullscreen="allowfullscreen" height="314" src="//www.youtube.com/embed/Fa4Qf5w1Y6k" width="560"></iframe></p>
@@ -427,7 +527,8 @@ if clientID != -1:
     time.sleep(2)
     vrep.simxSetJointTargetPosition(clientID,jointz,0,opmode)</pre>
 <p><br/><br/></p>
-<p></p><h1>問題</h1>
+<p></p>
+<h1>問題</h1>
 <h2>gogs</h2>
 <p><span>Github flaged 用戶, 利用 </span><a href="https://gogs.io/">gogs</a><span><span> </span>系統替代</span></p>
 <p><span>到<a href="https://fossil.kmol.info:3443">https://fossil.kmol.info:3443</a></span></p>
